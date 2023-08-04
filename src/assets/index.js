@@ -10,6 +10,8 @@ import sedan from './games/sedan.png'
 import treasure from './games/treasure.png'
 import jumping from './games/jumping.png'
 import menu from './games/menu.png'
+import cancel from './games/cancel.png'
+import dollar from './games/dollar-sign.png'
 
 // import LoginBG  from './LoginBG.jpg';
 
@@ -37,6 +39,8 @@ export {
    sedan,
    billiard,
    menu,
+   cancel,
+   dollar,
    newArray
   // LoginBG
 };

@@ -3,6 +3,9 @@ import React from 'react'
 import { Button, Container } from 'react-bootstrap'
 // import Icon from 'react-bootstrap-icons'
 import { XCircle } from 'react-bootstrap-icons';
+import { dollar, cancel } from '../assets';
+import { CurrencyDollar } from 'react-bootstrap-icons';
+
 
 
 export const Navbar = () => {
@@ -12,13 +15,14 @@ export const Navbar = () => {
       <div style={{marginLeft:"10px"}}><h3 style={{color:"#E96C2E"}}>Retail Logo</h3></div>
       <div>
         <Button style={{backgroundColor:"#F0801D", padding:"10px 20px", marginRight:"10px", fontWeight:"600", border:"none"}} size='md'>Cashier Options</Button>
-        <Button style={{backgroundColor:"#FCB65C", padding:"10px 20px", marginRight:"10px", fontWeight:"600", border:"none"}} size="md">Cancel 
-          <XCircle color="white" style={{marginLeft:"5px"}}/></Button>
-        <Button  style={{backgroundColor:"#78BD67", padding:"10px 20px", marginRight:"5px", fontWeight:"600", border:"none"}} size="md">Redeem $</Button>
+        <Button style={{backgroundColor:"#FCB65C", padding:"10px 20px", marginRight:"10px", fontWeight:"600", border:"none", justifyContent:"center"}} size="md">Cancel 
+          <img src={cancel} width="20px" style={{marginLeft:"10px"}}/></Button>
+        <Button  style={{backgroundColor:"#78BD67", padding:"10px 20px", marginRight:"5px", fontWeight:"600", border:"none", justifyContent:"center"}} size="md">Redeem 
+        <CurrencyDollar width="30px"/></Button>
       </div>
       <div style={{display:"flex"}}>
 
-        <h6  style={{color:"white", marginRight:"20px", paddingTop:"5px"}}>Weliso5 Cashier5 (Weliso5.Cashier5)</h6>
+        <h6  style={{color:"white", marginRight:"20px", paddingTop:"5px"}}>Keno Sample</h6>
         <h5  style={{color:"#E96C2E", marginRight:"10px"}}>Logout</h5>
         </div>
     </div>

@@ -94,49 +94,8 @@ export const Header = () => {
           KENO
         </h6>
       </div>
-      <div style={{ display: "flex", marginRight: "20px", width: "400px" }}>
-        {/* <Card
-          style={{
-            display: "flex",
-            width: "100%",
-            border: "none",
-            boxShadow: "0px 15px 15px rgb(0, 0, 0, 0.7)",
-          }}
-        >
-          <Card.Header
-            style={{
-              backgroundColor: "#191818",
-              border: "none",
-              borderBottom: "5px solid #111111",
-            }}
-          >
-            <h6 style={{ textAlign: "center", color: "rgb(233, 108, 46)" }}>
-              Betslip
-            </h6>
-          </Card.Header>
-          <Card.Body style={{ backgroundColor: "#191818", border: "none" }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                // justifyContent: "center",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "center" , paddingBottom:"10px"}}>
-                <Button style={{backgroundColor:"rgb(233, 108, 46)", borderColor:"rgb(233, 108, 46)", borderRadius:"3px"}}>SINGLE</Button>
-                <Button style={{backgroundColor:"#191818",  borderColor:"rgb(233, 108, 46)",borderRadius:"3px"}}>MULTIPLES</Button>
-              </div>
-              <h6 style={{textAlign:"center", color:"#99A3A4", marginBottom:"20px"}}>Add more bets</h6>
-              <div style={{display:"flex", width:"100%"}}>
-                <Button style={{width:"20%", borderRadius:"0px", marginRight:"2px", border:"none", padding:"10px"}}>CLEAR</Button>
-                <Button style={{width:"80%", borderRadius:"0px", backgroundColor:"green",border:"none", padding:"10px"}}>PLACE BET</Button>
-              </div>
-            </div>
-          </Card.Body>
-          <Card.Footer style={{backgroundColor:"#191818"}}>
-           
-          </Card.Footer>
-        </Card> */}
+      <div style={{ display: "flex", marginRight: "20px", width:"30%" }}>
+       
       </div>
     </div>
   );
