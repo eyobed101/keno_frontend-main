@@ -1071,7 +1071,7 @@ function Homepage() {
                   </h1>
                 </Col>
               </Row> */}
-                <Row>
+                {/* <Row>
                   {showLuckyTickets ? (
                     <LuckyTicketsComponent
                       luckyTickets={luckyTickets}
@@ -1081,7 +1081,7 @@ function Homepage() {
                   ) : (
                     <></>
                   )}
-                </Row>
+                </Row> */}
               </Col>
             </Row>
           </Container>
