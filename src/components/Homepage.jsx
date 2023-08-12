@@ -27,6 +27,7 @@ import {
   Trash3Fill,
   X,
 } from "react-bootstrap-icons";
+import PopupBox from "./ResultPopUpPage";
 
 // import './App.css'
 
@@ -50,6 +51,7 @@ function Homepage() {
   const [pays, setPays] = useState([]);
   const [hitsNum, setHitsNum] = useState([]);
   const [betSlip, setBetSlip] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [ticket, setTicket] = useState({
     id: "",
@@ -146,6 +148,16 @@ function Homepage() {
       clearInterval(ticketInterval);
     };
   }, [ticketStarted, ticketSeconds]);
+
+
+  const handleOpenPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
+
   const setClickedButton = (number, idx) => {
     let newArray = [...buttonArray];
 
@@ -281,7 +293,7 @@ function Homepage() {
     };
     setTicket(tickets);
     setMoneySelcted(10);
-    console.log(ticketArray)
+    console.log(ticketArray);
   };
 
   const clearTicket = () => {
@@ -291,7 +303,7 @@ function Homepage() {
       money: 0,
     };
     setTicket(tickets);
-    setBetSlip(false)
+    setBetSlip(false);
   };
 
   return (
@@ -448,6 +460,7 @@ function Homepage() {
                     border: "none",
                     borderRadius: "3px",
                   }}
+                  onClick={handleOpenPopup}
                 >
                   CLEAR{" "}
                   <span
@@ -460,6 +473,12 @@ function Homepage() {
                     <Trash3Fill />
                   </span>
                 </Button>
+                {isPopupOpen && (
+                  <PopupBox
+                    content="Check the status of the ticket here!"
+                    onClose={handleClosePopup}
+                  />
+                )}
               </div>
             </div>
             <Row>
@@ -848,7 +867,11 @@ function Homepage() {
                                     >
                                       Win {pays.slice(-1)}
                                     </p>
-                                    <X size="30px" color="white" onClick={clearTicket} />
+                                    <X
+                                      size="30px"
+                                      color="white"
+                                      onClick={clearTicket}
+                                    />
                                   </Card.Header>
                                   <Card.Body
                                     style={{
@@ -886,7 +909,9 @@ function Homepage() {
                                     backgroundColor: "#C66A09",
                                     border: "none",
                                   }}
-                                onClick={ () =>{setMoneySelcted(10)}}
+                                  onClick={() => {
+                                    setMoneySelcted(10);
+                                  }}
                                 >
                                   10 birr
                                 </Button>
@@ -897,7 +922,10 @@ function Homepage() {
                                     backgroundColor: "#DB528A",
                                     border: "none",
                                   }}
-                                  onClick={ () =>{setMoneySelcted(20)}}                                >
+                                  onClick={() => {
+                                    setMoneySelcted(20);
+                                  }}
+                                >
                                   20 birr
                                 </Button>
                                 <Button
@@ -907,7 +935,10 @@ function Homepage() {
                                     backgroundColor: "#7D52DB",
                                     border: "none",
                                   }}
-                                  onClick={ () =>{setMoneySelcted(50)}}                                >
+                                  onClick={() => {
+                                    setMoneySelcted(50);
+                                  }}
+                                >
                                   50 birr
                                 </Button>
                                 <Button
@@ -917,7 +948,10 @@ function Homepage() {
                                     backgroundColor: "#4C90DA",
                                     border: "none",
                                   }}
-                                  onClick={ () =>{setMoneySelcted(100)}}                                >
+                                  onClick={() => {
+                                    setMoneySelcted(100);
+                                  }}
+                                >
                                   100 birr
                                 </Button>
                               </div>
