@@ -11,7 +11,15 @@ const middlewares = [createStateSyncMiddleware()];
 
 const rootReducer = combineReducers({
       game:gameReducer,
-      luckyNumbers: numberReducer
+      luckyNumbers: numberReducer,
+      isPopupOpen: (state = false, action) => {
+        switch (action.type) {
+          case 'TOGGLE_ACTIVE':
+            return !state;
+          default:
+            return state;
+        }
+      },
 })
 
 const store = configureStore({reducer:rootReducer, middleware:[createStateSyncMiddleware()]})

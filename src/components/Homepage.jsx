@@ -51,7 +51,7 @@ function Homepage() {
   const [pays, setPays] = useState([]);
   const [hitsNum, setHitsNum] = useState([]);
   const [betSlip, setBetSlip] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  // const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [ticket, setTicket] = useState({
     id: "",
@@ -61,6 +61,9 @@ function Homepage() {
   const moneyArray = [20, 50, 80];
   const dispatch = useDispatch();
   const gameState = useSelector((state) => state.game);
+  const isPopupOpen = useSelector((state) => state.isPopupOpen);
+
+
   useEffect(() => {
     setButtonArray([]);
     const generateNumber = () => {
@@ -150,13 +153,7 @@ function Homepage() {
   }, [ticketStarted, ticketSeconds]);
 
 
-  const handleOpenPopup = () => {
-    setIsPopupOpen(true);
-  };
 
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
-  };
 
   const setClickedButton = (number, idx) => {
     let newArray = [...buttonArray];
@@ -460,7 +457,7 @@ function Homepage() {
                     border: "none",
                     borderRadius: "3px",
                   }}
-                  onClick={handleOpenPopup}
+                  
                 >
                   CLEAR{" "}
                   <span
@@ -476,7 +473,7 @@ function Homepage() {
                 {isPopupOpen && (
                   <PopupBox
                     content="Check the status of the ticket here!"
-                    onClose={handleClosePopup}
+                    
                   />
                 )}
               </div>

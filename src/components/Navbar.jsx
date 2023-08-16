@@ -5,10 +5,18 @@ import { Button, Container } from 'react-bootstrap'
 import { XCircle } from 'react-bootstrap-icons';
 import { dollar, cancel } from '../assets';
 import { CurrencyDollar } from 'react-bootstrap-icons';
+import { useDispatch} from 'react-redux';
 
 
 
 export const Navbar = () => {
+  const dispatch = useDispatch();
+
+
+  const toggleActive = () => {
+    dispatch({ type: 'TOGGLE_ACTIVE' });
+  };
+
   return (
     <>
     <div style={{position: "relative",zIndex: "10",width:"100%", boxShadow:"0px 5px 10px rgb(255, 255, 255, 0.25)",display:"flex", justifyContent:"space-between", alignItems:"center", backgroundColor:"#111111", padding:"10px"}}>
@@ -17,7 +25,7 @@ export const Navbar = () => {
         <Button style={{backgroundColor:"#F0801D", padding:"10px 20px", marginRight:"10px", fontWeight:"600", border:"none"}} size='md'>Cashier Options</Button>
         <Button style={{backgroundColor:"#FCB65C", padding:"10px 20px", marginRight:"10px", fontWeight:"600", border:"none", justifyContent:"center"}} size="md">Cancel 
           <img src={cancel} width="20px" style={{marginLeft:"10px"}}/></Button>
-        <Button  style={{backgroundColor:"#78BD67", padding:"10px 20px", marginRight:"5px", fontWeight:"600", border:"none", justifyContent:"center"}} size="md">Redeem 
+        <Button onClick={toggleActive}  style={{backgroundColor:"#78BD67", padding:"10px 20px", marginRight:"5px", fontWeight:"600", border:"none", justifyContent:"center"}} size="md">Redeem 
         <CurrencyDollar width="30px"/></Button>
       </div>
       <div style={{display:"flex"}}>

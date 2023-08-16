@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import './PopupComponent.css'
 import { Input } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
-const PopupBox = ({ content, onClose }) => {
+const PopupBox = ({ content}) => {
+  const dispatch = useDispatch();
+
+  const toggleActive = () => {
+    dispatch({ type: 'TOGGLE_ACTIVE' });
+  };
+
   return (
     <div className="popup-container">
       <div className="popup-content">
@@ -16,7 +23,7 @@ const PopupBox = ({ content, onClose }) => {
 
         </p>
 
-        <button className="close-button" onClick={onClose}>
+        <button className="close-button" onClick={toggleActive}>
           Close
         </button>
         
