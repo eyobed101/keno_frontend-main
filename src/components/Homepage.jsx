@@ -51,6 +51,7 @@ function Homepage() {
   const [pays, setPays] = useState([]);
   const [hitsNum, setHitsNum] = useState([]);
   const [betSlip, setBetSlip] = useState(false);
+  const [ticketType, setTicketType] = useState(true);
   // const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [ticket, setTicket] = useState({
@@ -62,7 +63,6 @@ function Homepage() {
   const dispatch = useDispatch();
   const gameState = useSelector((state) => state.game);
   const isPopupOpen = useSelector((state) => state.isPopupOpen);
-
 
   useEffect(() => {
     setButtonArray([]);
@@ -152,8 +152,13 @@ function Homepage() {
     };
   }, [ticketStarted, ticketSeconds]);
 
+  const OnSingleClicked = () => {
+    setTicketType(true);
+  };
 
-
+  const OnMultipleClicked = () => {
+    setTicketType(false);
+  };
 
   const setClickedButton = (number, idx) => {
     let newArray = [...buttonArray];
@@ -289,6 +294,7 @@ function Homepage() {
       money: 0,
     };
     setTicket(tickets);
+    setTicketType(true);
     setMoneySelcted(10);
     console.log(ticketArray);
   };
@@ -457,7 +463,6 @@ function Homepage() {
                     border: "none",
                     borderRadius: "3px",
                   }}
-                  
                 >
                   CLEAR{" "}
                   <span
@@ -471,10 +476,7 @@ function Homepage() {
                   </span>
                 </Button>
                 {isPopupOpen && (
-                  <PopupBox
-                    content="Check the status of the ticket here!"
-                    
-                  />
+                  <PopupBox content="Check the status of the ticket here!" />
                 )}
               </div>
             </div>
@@ -799,21 +801,23 @@ function Homepage() {
                         >
                           <Button
                             style={{
-                              backgroundColor: "rgb(233, 108, 46)",
+                              backgroundColor: ticketType ? "rgb(233, 108, 46)" : "#191818",
                               borderColor: "rgb(233, 108, 46)",
                               borderRadius: "3px",
                               padding: "0.5px 35px",
                             }}
+                            onClick={OnSingleClicked}
                           >
                             SINGLE
                           </Button>
                           <Button
                             style={{
-                              backgroundColor: "#191818",
+                              backgroundColor: ticketType ? "#191818" : "rgb(233, 108, 46)" ,
                               borderColor: "rgb(233, 108, 46)",
                               borderRadius: "3px",
                               padding: "0.5px 35px",
                             }}
+                            onClick={OnMultipleClicked}
                           >
                             MULTIPLES
                           </Button>
@@ -889,6 +893,22 @@ function Homepage() {
                                   </Card.Body>
                                 </Card>
                               </div>
+                              {ticketType ? (
+                                <div></div>
+                              ) : (
+                                <>
+                                  <h6
+                                    style={{
+                                      textAlign: "center",
+                                      color: "#99A3A4",
+                                      marginTop: "20px",
+                                      cursor: "pointer"
+                                    }}
+                                  >
+                                    Add more bets
+                                  </h6>
+                                </>
+                              )}
                               <div
                                 style={{
                                   display: "flex",
