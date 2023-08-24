@@ -14,8 +14,8 @@ import store from './store'
 function KenoUI() {
    return  (<BrowserRouter>
           <Routes>
-                <Route index element={<Homepage/>}/>
-                <Route path='/Game' element={<GamePage/>}/>
+                <Route index element={<Homepage />}/>
+                <Route path='/Game' element={<GamePage />}/>
           </Routes> 
       </BrowserRouter>);
 }

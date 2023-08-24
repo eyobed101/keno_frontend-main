@@ -52,10 +52,15 @@ function Homepage() {
   const [hitsNum, setHitsNum] = useState([]);
   const [betSlip, setBetSlip] = useState(false);
   const [ticketType, setTicketType] = useState(true);
+  const [openBullets, setOpenBullets] = useState(false);
+  const [numberOfTickets, setNumberOfThickets] = useState(0);
+  const [newTicket, setNewThicket] = useState(0);
+  const [newTicketNumbers, setNewThicketNumber] = useState([]);
   // const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [ticket, setTicket] = useState({
     id: "",
+    type: 0,
     numbers: [],
     money: 0,
   });
@@ -153,21 +158,57 @@ function Homepage() {
   }, [ticketStarted, ticketSeconds]);
 
   const OnSingleClicked = () => {
+    let localArray = []
     setTicketType(true);
+    setOpenBullets(true);
+    
+    if (Array.isArray(ticket.numbers[0])){
+      for (let i = 0; i < ticket.numbers[0].length; i++) {
+        localArray.push(ticket.numbers[0][i]);
+      }
+      ticket.numbers = []
+      for (let i = 0; i< localArray.length; i++){
+        ticket.numbers.push(localArray[i])
+      }
+      
+    }
+    ticket.type = 0
   };
 
   const OnMultipleClicked = () => {
+    setNewThicketNumber([])
     setTicketType(false);
+    setOpenBullets(true);
+    if (!Array.isArray(ticket.numbers[0])) {
+      for (let i = 0; i < ticket.numbers.length; i++) {
+        newTicketNumbers.push(ticket.numbers[i]);
+      }
+      ticket.numbers = [];
+      ticket.numbers.push(newTicketNumbers);
+      ticket.type = 1
+    }
+  };
+
+  const addMoreButton = () => {
+    // ticket.numbers.push(newTicketNumbers)
+    setNewThicketNumber([]);
+    setOpenBullets(false);
   };
 
   const setClickedButton = (number, idx) => {
     let newArray = [...buttonArray];
 
     setButtonArray(newArray);
+
     if (!number.clicked) {
       if (numberCount < 6) {
         newArray[idx] = { clicked: !number.clicked, num: number.num };
-        ticket.numbers.push(number.num);
+        if (ticketType) {
+          ticket.numbers.push(number.num);
+        } else {
+          newTicketNumbers.push(number.num);
+        }
+
         let num = numberCount + 1;
         setNumberCount(num);
         switch (num) {
@@ -258,21 +299,32 @@ function Homepage() {
     //   alert(" please insert money ");
     //   return;
     // }
-    let uid = uuid();
-    ticket.id = uid;
-    ticket.money = moneySelected;
-    // ticketArray.push(ticket);
-    // let tickets = {
-    //   id: "",
-    //   numbers: [],
-    //   money: 0,
-    // };
+    if (ticketType) {
+      let uid = uuid();
+      ticket.id = uid;
+      ticket.money = moneySelected;
+      ticket.type = 0
+      // ticketArray.push(ticket);
+      // let tickets = {
+      //   id: "",
+      //   numbers: [],
+      //   money: 0,
+      // };
+    } else {
+      let uid = uuid();
+      if (!ticket.id) {
+        ticket.id = uid;
+      }
+      ticket.numbers.push(newTicketNumbers);
+      ticket.money = moneySelected;
+    }
     setTicket(ticket);
+    setNewThicketNumber([])
     // setTicket(tickets);
     setBetSlip(true);
+    setOpenBullets(true);
     setButtonArray([]);
     setNumberCount(0);
-
     const generateNumber = () => {
       for (let i = 1; i <= NUMBER_LIMIT; i++) {
         setButtonArray((b) => [...b, { clicked: false, num: i }]);
@@ -285,6 +337,7 @@ function Homepage() {
 
   const placeBet = () => {
     setBetSlip(false);
+    setOpenBullets(false);
     ticket.money = moneySelected;
     setTicket(ticket);
     ticketArray.push(ticket);
@@ -302,7 +355,7 @@ function Homepage() {
   const clearTicket = () => {
     let tickets = {
       id: "",
-      numbers: [],
+      numbers: [[]],
       money: 0,
     };
     setTicket(tickets);
@@ -482,7 +535,13 @@ function Homepage() {
             </div>
             <Row>
               <Col lg={12} style={{ display: "flex" }}>
-                <div style={{ marginLeft: "20px" }}>
+                <div
+                  style={{
+                    marginLeft: "20px",
+                    pointerEvents: openBullets && betSlip ? "none" : "auto",
+                    opacity: openBullets && betSlip ? "0.5" : "1",
+                  }}
+                >
                   {buttonArray.map((btn, idx) => {
                     if (btn.num % 10 == 1) {
                       return (
@@ -801,7 +860,9 @@ function Homepage() {
                         >
                           <Button
                             style={{
-                              backgroundColor: ticketType ? "rgb(233, 108, 46)" : "#191818",
+                              backgroundColor: ticketType
+                                ? "rgb(233, 108, 46)"
+                                : "#191818",
                               borderColor: "rgb(233, 108, 46)",
                               borderRadius: "3px",
                               padding: "0.5px 35px",
@@ -812,7 +873,9 @@ function Homepage() {
                           </Button>
                           <Button
                             style={{
-                              backgroundColor: ticketType ? "#191818" : "rgb(233, 108, 46)" ,
+                              backgroundColor: ticketType
+                                ? "#191818"
+                                : "rgb(233, 108, 46)",
                               borderColor: "rgb(233, 108, 46)",
                               borderRadius: "3px",
                               padding: "0.5px 35px",
@@ -844,54 +907,107 @@ function Homepage() {
                               }}
                             >
                               <div>
-                                <Card
-                                  style={{
-                                    display: "flex",
-                                    width: "100%",
-                                    border: "none",
-                                    borderRadius: "3px",
-                                    backgroundColor: "#6D6D6C",
-                                  }}
-                                >
-                                  <Card.Header
+                                {ticketType ? (
+                                  <Card
                                     style={{
                                       display: "flex",
-                                      padding: "1px 10px",
-                                      justifyContent: "space-between",
+                                      width: "100%",
+                                      border: "none",
+                                      borderRadius: "3px",
+                                      backgroundColor: "#6D6D6C",
                                     }}
                                   >
-                                    <p
+                                    <Card.Header
                                       style={{
-                                        color: "white",
-                                        paddingTop: "5px",
+                                        display: "flex",
+                                        padding: "1px 10px",
+                                        justifyContent: "space-between",
                                       }}
                                     >
-                                      Win {pays.slice(-1)}
-                                    </p>
-                                    <X
-                                      size="30px"
-                                      color="white"
-                                      onClick={clearTicket}
-                                    />
-                                  </Card.Header>
-                                  <Card.Body
+                                      <p
+                                        style={{
+                                          color: "white",
+                                          paddingTop: "5px",
+                                        }}
+                                      >
+                                        Win {pays.slice(-1)}
+                                      </p>
+                                      <X
+                                        size="30px"
+                                        color="white"
+                                        onClick={clearTicket}
+                                      />
+                                    </Card.Header>
+                                    <Card.Body
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                      }}
+                                    >
+                                      <div style={{ color: "white" }}>
+                                        Numbers :{" "}
+                                        {ticket.numbers.map(
+                                          (item) => item + " , "
+                                        )}{" "}
+                                        <t />{" "}
+                                      </div>
+                                      <div style={{ color: "white" }}>
+                                        ID: {ticket.id}
+                                      </div>
+                                    </Card.Body>
+                                  </Card>
+                                ) : (
+                                  <Card
                                     style={{
                                       display: "flex",
-                                      flexDirection: "column",
+                                      width: "100%",
+                                      border: "none",
+                                      borderRadius: "3px",
+                                      backgroundColor: "#6D6D6C",
                                     }}
                                   >
-                                    <div style={{ color: "white" }}>
-                                      Numbers :{" "}
-                                      {ticket.numbers.map(
-                                        (item) => item + " , "
-                                      )}{" "}
-                                      <t />{" "}
-                                    </div>
-                                    <div style={{ color: "white" }}>
-                                      ID: {ticket.id}
-                                    </div>
-                                  </Card.Body>
-                                </Card>
+                                    <Card.Header
+                                      style={{
+                                        display: "flex",
+                                        padding: "1px 10px",
+                                        justifyContent: "space-between",
+                                      }}
+                                    >
+                                      <p
+                                        style={{
+                                          color: "white",
+                                          paddingTop: "5px",
+                                        }}
+                                      >
+                                        Ticket ID <br />
+                                        {ticket.id}
+                                        {/* Win {pays.slice(-1)} */}
+                                      </p>
+                                      <X
+                                        size="30px"
+                                        color="white"
+                                        onClick={clearTicket}
+                                      />
+                                    </Card.Header>
+                                    <Card.Body
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                      }}
+                                    >
+                                      <div style={{ color: "white" }}>
+                                        Numbers :{" "}
+                                        {ticket.numbers.map(
+                                          (item) => item + " , "
+                                        )}{" "}
+                                        <t />{" "}
+                                      </div>
+                                      <div style={{ color: "white" }}>
+                                        ID: {ticket.id}
+                                      </div>
+                                    </Card.Body>
+                                  </Card>
+                                )}
                               </div>
                               {ticketType ? (
                                 <div></div>
@@ -902,8 +1018,9 @@ function Homepage() {
                                       textAlign: "center",
                                       color: "#99A3A4",
                                       marginTop: "20px",
-                                      cursor: "pointer"
+                                      cursor: "pointer",
                                     }}
+                                    onClick={addMoreButton}
                                   >
                                     Add more bets
                                   </h6>
