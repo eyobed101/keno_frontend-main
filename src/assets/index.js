@@ -13,6 +13,18 @@ import menu from './games/menu.png'
 import cancel from './games/cancel.png'
 import dollar from './games/dollar-sign.png'
 
+let ballImageArray = []
+let newArray = []
+function populateImport()
+{
+      for(let i = 1; i <= 80; i++)
+      {
+            ballImageArray.push(`${i}`)
+      }
+}
+populateImport()
+const loadEntries = () => Promise.all(ballImageArray.map((arr) => import(`./Numbers/${arr}.png`)));
+loadEntries().then((res)=>newArray.push(res))
 
 export {
    background,
@@ -28,5 +40,6 @@ export {
    menu,
    cancel,
    dollar,
+   newArray
   // LoginBG
 };

@@ -49,6 +49,7 @@ function Homepage() {
   const [luckyNumbersGen, setLuckyNumbersGen] = useState([]);
   const [hits, setHits] = useState(0);
   const [pays, setPays] = useState([]);
+  const [muliplePay, setMultiplePay] = useState([]);
   const [hitsNum, setHitsNum] = useState([]);
   const [betSlip, setBetSlip] = useState(false);
   const [ticketType, setTicketType] = useState(true);
@@ -158,25 +159,24 @@ function Homepage() {
   }, [ticketStarted, ticketSeconds]);
 
   const OnSingleClicked = () => {
-    let localArray = []
+    let localArray = [];
     setTicketType(true);
     setOpenBullets(true);
-    
-    if (Array.isArray(ticket.numbers[0])){
+
+    if (Array.isArray(ticket.numbers[0])) {
       for (let i = 0; i < ticket.numbers[0].length; i++) {
         localArray.push(ticket.numbers[0][i]);
       }
-      ticket.numbers = []
-      for (let i = 0; i< localArray.length; i++){
-        ticket.numbers.push(localArray[i])
+      ticket.numbers = [];
+      for (let i = 0; i < localArray.length; i++) {
+        ticket.numbers.push(localArray[i]);
       }
-      
     }
-    ticket.type = 0
+    ticket.type = 0;
   };
 
   const OnMultipleClicked = () => {
-    setNewThicketNumber([])
+    setNewThicketNumber([]);
     setTicketType(false);
     setOpenBullets(true);
     if (!Array.isArray(ticket.numbers[0])) {
@@ -185,7 +185,7 @@ function Homepage() {
       }
       ticket.numbers = [];
       ticket.numbers.push(newTicketNumbers);
-      ticket.type = 1
+      ticket.type = 1;
     }
   };
 
@@ -303,7 +303,7 @@ function Homepage() {
       let uid = uuid();
       ticket.id = uid;
       ticket.money = moneySelected;
-      ticket.type = 0
+      ticket.type = 0;
       // ticketArray.push(ticket);
       // let tickets = {
       //   id: "",
@@ -315,11 +315,14 @@ function Homepage() {
       if (!ticket.id) {
         ticket.id = uid;
       }
+      let singlePays = []
+      singlePays.push(pays.slice(-1))
       ticket.numbers.push(newTicketNumbers);
       ticket.money = moneySelected;
+      setMultiplePay(singlePays)
     }
     setTicket(ticket);
-    setNewThicketNumber([])
+    setNewThicketNumber([]);
     // setTicket(tickets);
     setBetSlip(true);
     setOpenBullets(true);
@@ -338,6 +341,7 @@ function Homepage() {
   const placeBet = () => {
     setBetSlip(false);
     setOpenBullets(false);
+
     ticket.money = moneySelected;
     setTicket(ticket);
     ticketArray.push(ticket);
@@ -349,6 +353,7 @@ function Homepage() {
     setTicket(tickets);
     setTicketType(true);
     setMoneySelcted(10);
+    setMultiplePay([])
     console.log(ticketArray);
   };
 
@@ -981,6 +986,8 @@ function Homepage() {
                                       >
                                         Ticket ID <br />
                                         {ticket.id}
+                                        <br />
+                                        Keno Sample
                                         {/* Win {pays.slice(-1)} */}
                                       </p>
                                       <X
@@ -989,23 +996,24 @@ function Homepage() {
                                         onClick={clearTicket}
                                       />
                                     </Card.Header>
-                                    <Card.Body
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                      }}
-                                    >
-                                      <div style={{ color: "white" }}>
-                                        Numbers :{" "}
-                                        {ticket.numbers.map(
-                                          (item) => item + " , "
-                                        )}{" "}
-                                        <t />{" "}
-                                      </div>
-                                      <div style={{ color: "white" }}>
-                                        ID: {ticket.id}
-                                      </div>
-                                    </Card.Body>
+                                    {ticket.numbers.map((item, idx) => (
+                                      <Card.Body
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "column",
+                                        }}
+                                      >
+                                       <div style={{ color: "white" }}>
+                                          Win {console.log(muliplePay[idx])}
+                                        </div>
+                                        <div style={{ color: "white" }}>
+                                          Numbers : {" "}
+                                          {item + " , "}
+                                          {" "}
+                                          <t />{" "}
+                                        </div>
+                                      </Card.Body>
+                                    ))}
                                   </Card>
                                 )}
                               </div>
@@ -1040,7 +1048,10 @@ function Homepage() {
                                   style={{
                                     width: "23%",
                                     borderRadius: "4px",
-                                    backgroundColor: "#C66A09",
+                                    backgroundColor:
+                                      moneySelected === 10
+                                        ? "#C66A09"
+                                        : "#808080",
                                     border: "none",
                                   }}
                                   onClick={() => {
@@ -1053,7 +1064,10 @@ function Homepage() {
                                   style={{
                                     width: "23%",
                                     borderRadius: "4px",
-                                    backgroundColor: "#DB528A",
+                                    backgroundColor:
+                                      moneySelected === 20
+                                        ? "#DB528A"
+                                        : "#808080",
                                     border: "none",
                                   }}
                                   onClick={() => {
@@ -1066,7 +1080,10 @@ function Homepage() {
                                   style={{
                                     width: "23%",
                                     borderRadius: "4px",
-                                    backgroundColor: "#7D52DB",
+                                    backgroundColor:
+                                      moneySelected === 50
+                                        ? "#7D52DB"
+                                        : "#808080",
                                     border: "none",
                                   }}
                                   onClick={() => {
@@ -1079,7 +1096,10 @@ function Homepage() {
                                   style={{
                                     width: "23%",
                                     borderRadius: "4px",
-                                    backgroundColor: "#4C90DA",
+                                    backgroundColor:
+                                      moneySelected === 100
+                                        ? "#4C90DA"
+                                        : "#808080",
                                     border: "none",
                                   }}
                                   onClick={() => {
