@@ -187,6 +187,8 @@ function Homepage() {
       ticket.numbers.push(newTicketNumbers);
       ticket.type = 1;
     }
+    muliplePay.push(pays.slice(-1))
+    setMultiplePay(muliplePay)
   };
 
   const addMoreButton = () => {
@@ -315,11 +317,11 @@ function Homepage() {
       if (!ticket.id) {
         ticket.id = uid;
       }
-      let singlePays = []
-      singlePays.push(pays.slice(-1))
+      // let singlePays = []
+      muliplePay.push(pays.slice(-1))
       ticket.numbers.push(newTicketNumbers);
       ticket.money = moneySelected;
-      setMultiplePay(singlePays)
+      setMultiplePay(muliplePay)
     }
     setTicket(ticket);
     setNewThicketNumber([]);
@@ -1004,7 +1006,7 @@ function Homepage() {
                                         }}
                                       >
                                        <div style={{ color: "white" }}>
-                                          Win {console.log(muliplePay[idx])}
+                                          Win {muliplePay[idx]}
                                         </div>
                                         <div style={{ color: "white" }}>
                                           Numbers : {" "}
